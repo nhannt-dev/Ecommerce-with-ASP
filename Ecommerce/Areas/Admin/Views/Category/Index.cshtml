@@ -70,7 +70,7 @@
                                 <td>@item.Position</td>
                                 <td>
                                     <a href="/admin/category/edit/@item.Id" class="btn btn-primary btn-sm">Sửa</a>
-                                    <a class="btn btn-danger btn-sm btnDelete">Xóa</a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-danger btn-sm btnDelete">Xóa</a>
                                 </td>
                             </tr>
                             i++;
@@ -95,3 +95,26 @@
 
 </section>
 <!-- /.content -->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id')
+                var cf = confirm('Bạn có muốn xóa bản ghi này không?')
+                if (cf === true) {
+                    $.ajax({
+                        url: '/admin/category/delete',
+                        type: 'POST',
+                        data: { id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove()
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}
