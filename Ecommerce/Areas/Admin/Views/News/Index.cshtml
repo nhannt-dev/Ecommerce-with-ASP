@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Quản lý danh mục</h1>
+                <h1>Quản lý tin tức</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -45,7 +45,7 @@
 
             <div class="card-tools">
                 <a href="/admin/news/add" class="btn btn-primary">Thêm mới</a>
-                <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa</a>
+                <a href="#" class="btn btn-danger" id="BtnDeleteAll">Xóa nhiều</a>
             </div>
         </div>
         <div class="card-body">
@@ -66,6 +66,7 @@
                         var i = 1;
                         foreach (var item in Model)
                         {
+                            var strCheck = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
                             <tr id="trow_@item.Id">
                                 <td>@i</td>
                                 <td>
@@ -73,6 +74,9 @@
                                 </td>
                                 <td>@item.Title</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                <td class="pl-4">
+                                    <a href="#" data-id="@item.Id" class="btnActive">@Html.Raw(strCheck)</a>
+                                </td>
                                 <td>
                                     <a href="/admin/news/edit/@item.Id" class="btn btn-primary btn-sm">Sửa</a>
                                     <a href="#" data-id="@item.Id" class="btn btn-danger btn-sm btnDelete">Xóa</a>
@@ -107,7 +111,7 @@
             $('body').on('click', '.btnDelete', function () {
                 var id = $(this).data('id')
                 var cf = confirm('Bạn có muốn xóa bản ghi này không?')
-                if (cf === true) {
+                if (cf) {
                     $.ajax({
                         url: '/admin/news/delete',
                         type: 'POST',
@@ -119,6 +123,26 @@
                         }
                     })
                 }
+            })
+
+            $('body').on('click', '.btnActive', function (e) {
+                e.preventDefault()
+                var btn = $(this)
+                var id = btn.data('id')
+                $.ajax({
+                    url: '/admin/news/IsActive',
+                    type: 'POST',
+                    data: { id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            if (rs.isAcive) {
+                                btn.html("<i class='fa fa-check text-success'></i>")
+                            } else {
+                                btn.html("<i class='fas fa-times text-danger'></i>")
+                            }
+                        }
+                    }
+                })
             })
         })
     </script>

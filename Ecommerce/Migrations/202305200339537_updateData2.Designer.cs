@@ -7,13 +7,13 @@ namespace Ecommerce.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class updateData : IMigrationMetadata
+    public sealed partial class updateData2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateData));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateData2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305171346094_updateData"; }
+            get { return "202305200339537_updateData2"; }
         }
         
         string IMigrationMetadata.Source

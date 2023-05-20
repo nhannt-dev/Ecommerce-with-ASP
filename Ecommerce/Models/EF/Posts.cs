@@ -30,6 +30,7 @@ namespace Ecommerce.Models.EF
         public string SeoDescription { get; set; }
         [StringLength(250)]
         public string SeoKeywords { get; set; }
+        public bool IsActive { get; set; }
         public virtual Category Category { get; set; }
     }
 }
